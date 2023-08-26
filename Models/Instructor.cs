@@ -23,6 +23,8 @@ public class Instructor
     [Display(Name = "Full Name")]
     public string FullName => $"{FirstName} {LastName}";
 
+    public virtual Department Department { get; set; }
+
     public virtual ICollection<CourseAssignment> CourseAssignments { get; set; }
     public virtual OfficeAssignment OfficeAssignment { get; set; }
 

@@ -1,4 +1,6 @@
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 public class Department
 {
@@ -8,7 +10,7 @@ public class Department
     [StringLength(50, MinimumLength = 3)]
     public string Name { get; set; }
 
-    [Currency]
+    [DataType(DataType.Currency)]
     public decimal Budget { get; set; }
 
     [DataType(DataType.Date)]
@@ -16,8 +18,8 @@ public class Department
     [Display(Name = "Start Date")]
     public DateTime StartDate { get; set; }
 
-    public int InstructorID { get; set; }
-    public virtual Instructor Administrator { get; set; }
-    public virtual ICollection<Course> Courses { get; set; }
+    public int? InstructorID { get; set; }
+    public virtual Instructor Instructor { get; set; }
 
+    public virtual ICollection<Course> Courses { get; set; }
 }

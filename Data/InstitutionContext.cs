@@ -4,8 +4,6 @@ namespace EdInstitution.Data
 {
     public class InstitutionContext : DbContext
     {
-        // DbSet properties for your entities
-
         public InstitutionContext(DbContextOptions<InstitutionContext> options) : base(options)
         {
         }
@@ -40,11 +38,18 @@ namespace EdInstitution.Data
                 .HasForeignKey(ca => ca.CourseID)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Define a unique constraint for Department and Instructor
+            modelBuilder.Entity<Department>()
+                .HasOne(d => d.Instructor)
+                .WithOne(i => i.Department)
+                .HasForeignKey<Department>(d => d.InstructorID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            // Optionally, you can configure other entity properties and constraints.
             modelBuilder.Entity<Department>()
                 .Property(d => d.Budget)
                 .HasColumnType("decimal(18, 2)");
-
-
         }
     }
 }
