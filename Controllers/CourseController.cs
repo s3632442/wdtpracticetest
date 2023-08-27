@@ -3,46 +3,39 @@ using Microsoft.AspNetCore.Mvc;
 using EdInstitution.Models;
 using EdInstitution.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging; // Make sure to include this namespace for ILogger
 
-namespace EdInstitution.Controllers;
-
-public class CourseController : Controller
+namespace EdInstitution.Controllers
 {
-
-    private readonly InstitutionContext _context;
-
-    private readonly ILogger<CourseController> _logger;
-
-    public CourseController(ILogger<CourseController> logger)
+    public class CourseController : Controller
     {
-        _logger = logger;
-    }
+        private readonly InstitutionContext _context;
+        private readonly ILogger<CourseController> _logger;
 
-    public async Task<IActionResult>  ListCourses()
-    {
-        
-        var viewModel = new CoursesViewModel{
-            courses = await _context.Courses.ToListAsync()
-        };
+        public CourseController(InstitutionContext context, ILogger<CourseController> logger)
+        {
+            _context = context;
+            _logger = logger;
+        }
 
-        return View(viewModel);
-    }
+        public async Task<IActionResult> ListCourses()
+        {
+            var courses = await _context.Courses
+                .Include(course => course.Department) // Include the Department navigation property
+                .ToListAsync();
 
-    
-    public string wobbledonk() => "touch me wobbledonk";
+            var viewModel = new CoursesViewModel
+            {
+                courses = courses
+            };
 
+            return View("ListCourses", viewModel);
+        }
 
-    ///Home/Welcome?name=booz&numTimes=77
-    public string Welcome(string name, int numTimes) => $"hello {name}, Numtimes is {numTimes}.";
-
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 }
