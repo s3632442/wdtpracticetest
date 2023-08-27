@@ -1,0 +1,30 @@
+@model CoursesViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List of Courses</title>
+</head>
+<body>
+    <h1>List of Courses</h1>
+    
+    <table>
+        <tr>
+            <th>Course ID</th>
+            <th>Course Title</th>
+            <th>Credits</th>
+            <th>Department</th>
+        </tr>
+        
+        @foreach (var course in Model.courses)
+        {
+            <tr>
+                <td>@course.CourseID</td>
+                <td>@course.Title</td>
+                <td>@course.Credits</td>
+                <td>@course.Department.Name</td>
+            </tr>
+        }
+    </table>
+</body>
+</html>

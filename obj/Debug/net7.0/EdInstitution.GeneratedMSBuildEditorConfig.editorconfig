@@ -16,6 +16,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = /home/thomas.lambert/learning/rmit/webdevtech/exam/ex1/EdInstitution
 build_property._RazorSourceGeneratorDebug = 
 
+[/home/thomas.lambert/learning/rmit/webdevtech/exam/ex1/EdInstitution/Views/Courses/ListCourses.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ291cnNlcy9MaXN0Q291cnNlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/thomas.lambert/learning/rmit/webdevtech/exam/ex1/EdInstitution/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

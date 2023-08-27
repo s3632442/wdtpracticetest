@@ -1,11 +1,16 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using EdInstitution.Models;
+using EdInstitution.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace EdInstitution.Controllers;
 
 public class CourseController : Controller
 {
+
+    private readonly InstitutionContext _context;
+
     private readonly ILogger<CourseController> _logger;
 
     public CourseController(ILogger<CourseController> logger)
@@ -13,11 +18,17 @@ public class CourseController : Controller
         _logger = logger;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult>  ListCourses()
     {
-        return View();
+        
+        var viewModel = new CoursesViewModel{
+            courses = await _context.Courses.ToListAsync()
+        };
+
+        return View(viewModel);
     }
 
+    
     public string wobbledonk() => "touch me wobbledonk";
 
 

@@ -24060,6 +24060,11 @@
       "FilePath": "/home/thomas.lambert/learning/rmit/webdevtech/exam/ex1/EdInstitution/Views/Shared/_Layout.cshtml",
       "TargetPath": "Views\\Shared\\_Layout.cshtml",
       "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/thomas.lambert/learning/rmit/webdevtech/exam/ex1/EdInstitution/Views/Courses/ListCourses.cshtml",
+      "TargetPath": "Views\\Courses\\ListCourses.cshtml",
+      "FileKind": "mvc"
     }
   ]
 }
