@@ -1,0 +1,123 @@
+@model CoursesAndInstructorsViewModel
+@using X.PagedList;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Courses and Instructors</title>
+</head>
+<body>
+    <h1>Courses and Instructors</h1>
+
+    <p id="fetching-message">Fetching data...</p>
+
+    <div id="data-container" style="display: none;">
+        <div style="display: flex;">
+            <div style="flex: 1;">
+                <h2>List of Instructors</h2>
+
+                @foreach (var instructor in Model.Instructors.Instructors)
+                {
+                    <h3>Instructor: @instructor.FirstName @instructor.LastName</h3>
+                    <ul>
+                        <li>Instructor ID: @instructor.ID</li>
+                        <li>Hire Date: @instructor.HireDate</li>
+                        <li>
+                            Courses Taught:
+                            <ul>
+                                @foreach (var courseAssignment in instructor.CourseAssignments)
+                                {
+                                    <li>@courseAssignment.Course.Title</li>
+                                }
+                            </ul>
+                        </li>
+                        
+                        <a asp-controller="EditInstructor" asp-action="EditInstructor" asp-route-id="@instructor.ID">Edit</a>
+                    </ul>       
+                }
+                
+                @if (Model.Instructors.Instructors.PageCount > 1)
+                {
+                    <div>
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                @for (int i = 1; i <= Model.Instructors.Instructors.PageCount; i++)
+                                {
+                                    <li class="page-item @(i == Model.Instructors.Instructors.PageNumber ? "active" : "")">
+                                        <a class="page-link" asp-action="ListInstructors" asp-route-page="@i">
+                                            @i
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                }
+            </div>
+
+            <div style="flex: 1;">
+                <h2>List of Courses</h2>
+
+                @foreach (var course in Model.Courses.Courses)
+                {
+                    <h3>Course: @course.Title</h3>
+                    <ul>
+                        <li>Course ID: @course.CourseID</li>
+                        <li>Credits: @course.Credits</li>
+                        <li>Department: @course.Department.Name</li>
+                        <li>
+                            Enrolled Students:
+                            <ul>
+                                @foreach (var enrollment in course.Enrollments)
+                                {
+                                    <li>@enrollment.Student.FirstName @enrollment.Student.LastName</li>
+                                }
+                            </ul>
+                        </li>
+                        <a asp-controller="EditCourse" asp-action="EditCourse" asp-route-id="@course.CourseID">Edit</a>
+                    </ul>
+                }
+                
+                @if (Model.Courses.Courses.PageCount > 1)
+                {
+                    <div>
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                @for (int i = 1; i <= Model.Courses.Courses.PageCount; i++)
+                                {
+                                    <li class="page-item @(i == Model.Courses.Courses.PageNumber ? "active" : "")">
+                                        <a class="page-link" asp-action="ListCourses" asp-route-page="@i">
+                                            @i
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <script>
+        setTimeout(function () {
+            document.getElementById("fetching-message").style.display = "none";
+            document.getElementById("data-container").style.display = "block";
+        }, 10000); // 10 seconds
+
+        // You can add additional JavaScript here for more functionality if needed
+    </script>
+</body>
+</html>
+<!-- Add this script tag at the end of your <body> element -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.12/signalr.min.js"></script>
+<script>
+    var connection = new signalR.HubConnectionBuilder().withUrl("/courseInstructorHub").build();
+
+    connection.on("DataUpdated", function (timestamp) {
+        console.log("New data fetched at: " + timestamp);
+        location.reload();
+    });
+
+    connection.start();
+</script>

@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using EdInstitution.Models;
 using EdInstitution.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging; // Make sure to include this namespace for ILogger
+using Microsoft.Extensions.Logging;
+using X.PagedList; // Make sure to include this namespace for X.PagedList
 
 namespace EdInstitution.Controllers
 {
@@ -18,21 +19,26 @@ namespace EdInstitution.Controllers
             _logger = logger;
         }
 
-         public async Task<IActionResult> ListCourses()
-    {
-        var courses = await _context.Courses
-            .Include(course => course.Department)
-            .Include(course => course.Enrollments)
-                .ThenInclude(enrollment => enrollment.Student)
-            .ToListAsync();
-
-        var viewModel = new CoursesViewModel
+        public async Task<IActionResult> ListCourses(int? page)
         {
-            courses = courses
-        };
+            var courses = await _context.Courses
+                .Include(course => course.Department)
+                .Include(course => course.Enrollments)
+                    .ThenInclude(enrollment => enrollment.Student)
+                .ToListAsync();
 
-        return View("ListCourses", viewModel);
-    }
+            int pageNumber = page ?? 1; // If no page number is specified, default to 1
+            int pageSize = 4; // Number of records per page
+
+            var pagedCourses = courses.ToPagedList(pageNumber, pageSize);
+
+            var viewModel = new CoursesViewModel
+            {
+                Courses = pagedCourses
+            };
+
+            return View("ListCourses", viewModel);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

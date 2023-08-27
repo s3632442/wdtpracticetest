@@ -1,3 +1,4 @@
+using EdInstitution.BackgroundServices;
 using EdInstitution.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,7 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<InstitutionContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("InstitutionContext"));
+    
 });
+
+builder.Services.AddHostedService<CourseInstructorBackgroundService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

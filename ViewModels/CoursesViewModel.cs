@@ -1,7 +1,9 @@
+using X.PagedList;
+
 public class CoursesViewModel
 {
     
-    public List<Course> courses {get; set;}
+    public IPagedList<Course> Courses { get; set; }
 
 
 }
