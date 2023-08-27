@@ -24070,6 +24070,16 @@
       "FilePath": "/home/thomas.lambert/learning/rmit/webdevtech/exam/ex1/EdInstitution/Views/Instructor/ListInstructors.cshtml",
       "TargetPath": "Views\\Instructor\\ListInstructors.cshtml",
       "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/thomas.lambert/learning/rmit/webdevtech/exam/ex1/EdInstitution/Views/Course/EditCourse.cshtml",
+      "TargetPath": "Views\\Course\\EditCourse.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/thomas.lambert/learning/rmit/webdevtech/exam/ex1/EdInstitution/Views/Instructor/EditInstructor.cshtml",
+      "TargetPath": "Views\\Instructor\\EditInstructor.cshtml",
+      "FileKind": "mvc"
     }
   ]
 }

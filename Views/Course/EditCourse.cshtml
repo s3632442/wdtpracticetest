@@ -1,0 +1,30 @@
+@model Course
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Course</title>
+</head>
+<body>
+    <h1>Edit Course</h1>
+
+    <form asp-action="EditCourse">
+        <input type="hidden" asp-for="CourseID" />
+        <div>
+            <label asp-for="Title"></label>
+            <input asp-for="Title" />
+        </div>
+        <div>
+            <label asp-for="Credits"></label>
+            <input asp-for="Credits" />
+        </div>
+        <div>
+            <label asp-for="DepartmentID"></label>
+            <input asp-for="DepartmentID" />
+        </div>
+        <div>
+            <input type="submit" value="Save" />
+        </div>
+    </form>
+</body>
+</html>

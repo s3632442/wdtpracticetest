@@ -7,24 +7,29 @@
 </head>
 <body>
     <h1>List of Courses</h1>
-    
-    <table>
-        <tr>
-            <th>Course ID</th>
-            <th>Course Title</th>
-            <th>Credits</th>
-            <th>Department</th>
-        </tr>
-        
+
+    <ul>
         @foreach (var course in Model.courses)
         {
-            <tr>
-                <td>@course.CourseID</td>
-                <td>@course.Title</td>
-                <td>@course.Credits</td>
-                <td>@course.Department.Name</td>
-            </tr>
+            <li>
+                <h2>Course: @course.Title</h2>
+                <ul>
+                    <li>Course ID: @course.CourseID</li>
+                    <li>Credits: @course.Credits</li>
+                    <li>Department: @course.Department.Name</li>
+                    <li>
+                        Enrolled Students:
+                        <ul>
+                            @foreach (var enrollment in course.Enrollments)
+                            {
+                                <li>@enrollment.Student.FirstName @enrollment.Student.LastName</li>
+                            }
+                        </ul>
+                    </li>
+                    <a asp-controller="EditCourse" asp-action="EditCourse" asp-route-id="@course.CourseID">Edit</a>
+                </ul>
+            </li>
         }
-    </table>
+    </ul>
 </body>
 </html>

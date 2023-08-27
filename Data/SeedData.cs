@@ -13,18 +13,36 @@ namespace EdInstitution.Data
                 {
                     // Seed data for Instructors
                     context.Instructors.AddRange(
-                        new Instructor
-                        {
-                            FirstName = "John",
-                            LastName = "Doe",
-                            HireDate = new DateTime(2020, 1, 15)
-                        },
-                        new Instructor
-                        {
-                            FirstName = "Jane",
-                            LastName = "Smith",
-                            HireDate = new DateTime(2018, 5, 10)
-                        }
+                    new Instructor
+                    {
+                        FirstName = "John",
+                        LastName = "Doe",
+                        HireDate = new DateTime(2020, 1, 15)
+                    },
+                    new Instructor
+                    {
+                        FirstName = "Jane",
+                        LastName = "Smith",
+                        HireDate = new DateTime(2018, 5, 10)
+                    },
+                    new Instructor
+                    {
+                        FirstName = "Michael",
+                        LastName = "Johnson",
+                        HireDate = new DateTime(2019, 8, 20)
+                    },
+                    new Instructor
+                    {
+                        FirstName = "Emily",
+                        LastName = "Brown",
+                        HireDate = new DateTime(2017, 3, 5)
+                    },
+                    new Instructor
+                    {
+                        FirstName = "William",
+                        LastName = "Anderson",
+                        HireDate = new DateTime(2021, 6, 12)
+                    }
                     );
 
                     context.SaveChanges(); // Save instructors before referencing them in other entities

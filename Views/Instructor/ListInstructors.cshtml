@@ -1,5 +1,6 @@
 @model InstructorsViewModel
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,26 +8,45 @@
 </head>
 <body>
     <h1>List of Instructors</h1>
-    
-    <table>
-        <tr>
-            <th>Instructor ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Hire Date</th>
-            <th>...</th> <!-- Add more columns as needed -->
-        </tr>
+
+    @foreach (var instructor in Model.Instructors)
+    {
+        <h2>Instructor: @instructor.FirstName @instructor.LastName</h2>
+        <ul>
+            <li>Instructor ID: @instructor.ID</li>
+            <li>Hire Date: @instructor.HireDate</li>
+            <li>
+                Courses Taught:
+                <ul>
+                    @foreach (var courseAssignment in instructor.CourseAssignments)
+                    {
+                        <li>@courseAssignment.Course.Title</li>
+                    }
+                </ul>
+            </li>
+            
+            <a asp-controller="EditInstructor" asp-action="EditInstructor" asp-route-id="@instructor.ID">Edit</a>
+        </ul>       
         
-        @foreach (var instructor in Model.Instructors)
-        {
-            <tr>
-                <td>@instructor.ID</td>
-                <td>@instructor.FirstName</td>
-                <td>@instructor.LastName</td>
-                <td>@instructor.HireDate</td>
-                <td>...</td> <!-- Add more columns as needed -->
-            </tr>
-        }
-    </table>
+    }
+    @if (Model.Instructors.PageCount > 1)
+            {
+                <div>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            @for (int i = 1; i <= Model.Instructors.PageCount; i++)
+                            {
+                                <li class="page-item @(i == Model.Instructors.PageNumber ? "active" : "")">
+                                    <a class="page-link" asp-action="ListInstructors" asp-route-page="@i">
+                                        @i
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                </div>
+            } 
+
 </body>
+
 </html>

@@ -1,5 +1,7 @@
 
+using X.PagedList;
+
 public class InstructorsViewModel
 {
-    public List<Instructor> Instructors { get; set; }
+    public IPagedList<Instructor> Instructors { get; set; }
 }

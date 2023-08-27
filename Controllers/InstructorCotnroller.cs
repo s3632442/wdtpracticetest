@@ -1,7 +1,8 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EdInstitution.Data;
+using X.PagedList;
+
 
 namespace EdInstitution.Controllers
 {
@@ -14,16 +15,27 @@ namespace EdInstitution.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> ListInstructors()
-        {
-            var instructors = await _context.Instructors.ToListAsync();
+ public async Task<IActionResult> ListInstructors(int? page)
+{
+    var instructors = await _context.Instructors
+        .Include(i => i.CourseAssignments)
+            .ThenInclude(ca => ca.Course)
+        .ToListAsync();
 
-            var viewModel = new InstructorsViewModel
-            {
-                Instructors = instructors
-            };
+    int pageNumber = page ?? 1; // If no page number is specified, default to 1
+    int pageSize = 4; // Number of records per page
 
-            return View(viewModel);
-        }
+    var pagedInstructors = instructors.ToPagedList(pageNumber, pageSize);
+
+    var viewModel = new InstructorsViewModel
+    {
+        Instructors = pagedInstructors
+    };
+
+    return View(viewModel);
+}
+
+        
+
     }
 }

@@ -18,19 +18,21 @@ namespace EdInstitution.Controllers
             _logger = logger;
         }
 
-        public async Task<IActionResult> ListCourses()
+         public async Task<IActionResult> ListCourses()
+    {
+        var courses = await _context.Courses
+            .Include(course => course.Department)
+            .Include(course => course.Enrollments)
+                .ThenInclude(enrollment => enrollment.Student)
+            .ToListAsync();
+
+        var viewModel = new CoursesViewModel
         {
-            var courses = await _context.Courses
-                .Include(course => course.Department) // Include the Department navigation property
-                .ToListAsync();
+            courses = courses
+        };
 
-            var viewModel = new CoursesViewModel
-            {
-                courses = courses
-            };
-
-            return View("ListCourses", viewModel);
-        }
+        return View("ListCourses", viewModel);
+    }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

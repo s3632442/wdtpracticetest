@@ -1,0 +1,30 @@
+@model Instructor
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Instructor</title>
+</head>
+<body>
+    <h1>Edit Instructor</h1>
+
+    <form asp-action="EditInstructor">
+        <input type="hidden" asp-for="ID" />
+        <div>
+            <label asp-for="FirstName"></label>
+            <input asp-for="FirstName" />
+        </div>
+        <div>
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" />
+        </div>
+        <div>
+            <label asp-for="HireDate"></label>
+            <input asp-for="HireDate" />
+        </div>
+        <div>
+            <input type="submit" value="Save" />
+        </div>
+    </form>
+</body>
+</html>
